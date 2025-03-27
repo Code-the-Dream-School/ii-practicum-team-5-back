@@ -2,19 +2,18 @@
   "name": "bb-practicum-team-1-back",
   "version": "1.0.0",
   "description": "Back-End Repo for Team 1 of Baboon/Bald Eagle Practicum",
-  "main": "app.js",
+  "main": "app.ts",
   "engines": {
     "node": "20.19.0"
   },
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
+    "start": "ts-node src/server.ts",
+    "dev": "nodemon src/server.ts",
     "lint": "eslint src --ext .js,.ts --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "npm run lint -- --fix",
     "prettier": "npx prettier --check \"**/*.{js,ts,json,md}\"",
     "prettier:fix": "npx prettier --write \"**/*.{js,ts,json,md}\"",
-    "format": "npm run prettier:fix && npm run lint:fix",
-    "seed": "node src/seeds/seedDatabase.js"
+    "format": "npm run prettier:fix && npm run lint:fix"
   },
   "author": "",
   "license": "ISC",
