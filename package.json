@@ -9,10 +9,10 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint src --ext .js,.ts --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "npm run lint -- --fix",
-    "prettier": "npx prettier src --check",
-    "prettier:fix": "npm run prettier -- --write",
+    "prettier": "npx prettier --check \"**/*.{js,ts,json,md}\"",
+    "prettier:fix": "npx prettier --write \"**/*.{js,ts,json,md}\"",
     "format": "npm run prettier:fix && npm run lint:fix",
     "seed": "node src/seeds/seedDatabase.js"
   },
