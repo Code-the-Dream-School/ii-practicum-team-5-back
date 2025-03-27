@@ -4,7 +4,7 @@ _1) What does this PR do? 2) List out what you did._
 
 ## Related Issue
 
-_Provide a link to the related issue 
+\_Provide a link to the related issue
 
 ## Type of Changes
 
