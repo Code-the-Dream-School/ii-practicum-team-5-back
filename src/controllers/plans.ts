@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import dummyData from '../dummyData.json'
-import { categoryType, planType, stopType, userType } from '../dummyDataTypes'
+import dummyData from '../data/dummyData.json' with { type: 'json' }
+import { categoryType, planType, stopType, userType } from '../data/dummyDataTypes.js'
 
 const dummyPlans: planType[] = dummyData.plans
 const dummyStops: stopType[] = dummyData.stops

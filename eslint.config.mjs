@@ -1,8 +1,7 @@
 import globals from 'globals'
 import js from '@eslint/js'
-import ts from '@typescript-eslint/eslint-plugin';
-import tsParser from '@typescript-eslint/parser';
-import pluginReact from 'eslint-plugin-react'
+import ts from '@typescript-eslint/eslint-plugin'
+import tsParser from '@typescript-eslint/parser'
 import pluginPrettier from 'eslint-plugin-prettier'
 import configPrettier from 'eslint-config-prettier'
 
@@ -14,8 +13,8 @@ export default [
       parser: tsParser,
       parserOptions: {
         project: './tsconfig.json',
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
   },
   {
@@ -30,12 +29,10 @@ export default [
   },
   {
     files: ['**/*.{js,mjs,cjs,jsx,ts,tsx}'],
-    plugins: { 'react': pluginReact },
-    rules: pluginReact.configs.flat.recommended.rules,
   },
   {
     files: ['**/*.{js,mjs,cjs,jsx,ts,tsx}'],
-    plugins: { 'prettier': pluginPrettier },
+    plugins: { prettier: pluginPrettier },
     rules: {
       ...configPrettier.rules, // Disable conflicting ESLint rules
       'prettier/prettier': 'error', // Treat Prettier formatting issues as ESLint errors
