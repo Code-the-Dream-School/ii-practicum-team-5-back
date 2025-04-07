@@ -6,6 +6,9 @@ import apiRouter from './routes/index.js'
 import swaggerUI from 'swagger-ui-express'
 import YAML from 'yamljs'
 
+import { getDirPath } from './utils/files.js'
+const __dirname = getDirPath(import.meta.url)
+
 const app = express()
 
 app.use(cors())

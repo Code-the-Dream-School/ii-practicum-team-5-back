@@ -1,12 +1,12 @@
 import express from 'express'
 import fs from 'fs/promises'
 import path from 'path'
-import { fileURLToPath, pathToFileURL } from 'url'
+import { pathToFileURL } from 'url'
 
 import mainController from '../controllers/mainController.js'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+import { getDirPath } from '../utils/files.js'
+const __dirname = getDirPath(import.meta.url)
 
 const router = express.Router()
 
