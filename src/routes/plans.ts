@@ -1,5 +1,5 @@
 import express from 'express'
-import { fetchAllPlans, fetchPlan, fetchUserWithPlans, fetchCategoryWithPlans } from '../controllers/plans'
+import { fetchAllPlans, fetchPlan, fetchUserWithPlans, fetchCategoryWithPlans } from '../controllers/plans.js'
 
 const router = express.Router()
 
