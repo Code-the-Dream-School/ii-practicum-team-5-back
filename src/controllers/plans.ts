@@ -9,7 +9,7 @@ const dummyUsers: userType[] = dummyData.users
 
 const PAGE_SIZE = 10
 
-const getAllPlans = (req: Request, res: Response) => {
+const fetchAllPlans = (req: Request, res: Response) => {
   const { categoryId, page = 1, size = PAGE_SIZE } = req.query
 
   let resultPlans: planType[] = dummyPlans
@@ -33,7 +33,7 @@ const getAllPlans = (req: Request, res: Response) => {
   })
 }
 
-const getUserPlans = (req: Request, res: Response) => {
+const fetchUserWithPlans = (req: Request, res: Response) => {
   const { userId, page = 1, size = PAGE_SIZE } = req.params
 
   const user = dummyUsers.find((user: userType) => {
@@ -70,7 +70,7 @@ const getUserPlans = (req: Request, res: Response) => {
   })
 }
 
-const getCategoryPlans = (req: Request, res: Response) => {
+const fetchCategoryWithPlans = (req: Request, res: Response) => {
   const { categoryId, page = 1, size = PAGE_SIZE } = req.params
 
   const category = dummyCategories.find((category: categoryType) => {
@@ -104,7 +104,7 @@ const getCategoryPlans = (req: Request, res: Response) => {
   })
 }
 
-const getPlan = (req: Request, res: Response) => {
+const fetchPlan = (req: Request, res: Response) => {
   const { planId } = req.params
 
   const plan = dummyPlans.find((plan: planType) => {
@@ -126,4 +126,4 @@ const getPlan = (req: Request, res: Response) => {
   })
 }
 
-export { getAllPlans, getPlan, getUserPlans, getCategoryPlans }
+export { fetchAllPlans, fetchPlan, fetchUserWithPlans, fetchCategoryWithPlans }
