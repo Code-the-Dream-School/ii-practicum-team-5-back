@@ -1,18 +1,18 @@
-import mongoose, { Document, Schema } from 'mongoose';
-import bcrypt from 'bcryptjs';
-import jwt, { SignOptions } from 'jsonwebtoken';
+import mongoose, { Document, Schema } from 'mongoose'
+import bcrypt from 'bcryptjs'
+import jwt, { SignOptions } from 'jsonwebtoken'
 
 export interface IUser extends Document {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  confirmPassword?: string;
-  createJWT(): string;
-  comparePassword(userPassword: string): Promise<boolean>;
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+  confirmPassword?: string
+  createJWT(): string
+  comparePassword(userPassword: string): Promise<boolean>
 
-  passwordResetToken?: string;
-  passwordResetExpires?: number;
+  passwordResetToken?: string
+  passwordResetExpires?: number
 }
 
 const UserSchema: Schema<IUser> = new mongoose.Schema(
@@ -57,7 +57,7 @@ const UserSchema: Schema<IUser> = new mongoose.Schema(
       type: String,
       validate: {
         validator: function (value: string) {
-          return value === (this as IUser).password;
+          return value === (this as IUser).password
         },
         message: 'Password does not match.',
       },
@@ -67,52 +67,48 @@ const UserSchema: Schema<IUser> = new mongoose.Schema(
     },
     passwordResetExpires: {
       type: Number,
-    }
+    },
   },
   { timestamps: true }
 )
 
 // Pre save hook for password hashing and trimming fields
-UserSchema.pre<IUser>("save", async function (next) {
-  this.firstName = this.firstName.trim();
-  this.lastName = this.lastName.trim();
-  this.email = this.email.toLocaleLowerCase().trim();
+UserSchema.pre<IUser>('save', async function (next) {
+  this.firstName = this.firstName.trim()
+  this.lastName = this.lastName.trim()
+  this.email = this.email.toLocaleLowerCase().trim()
 
   if (this.isModified('password')) {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
+    const salt = await bcrypt.genSalt(10)
+    this.password = await bcrypt.hash(this.password, salt)
   }
 
-  this.confirmPassword = undefined; // remove confirmedPassword field
-  next();
+  this.confirmPassword = undefined // remove confirmedPassword field
+  next()
 })
 
 // create JWT token method
 UserSchema.methods.createJWT = function (): string {
-  const secretKey = process.env.JWT_SECRET_KEY as string; // Explicit cast to string
+  const secretKey = process.env.JWT_SECRET_KEY as string // Explicit cast to string
   if (!secretKey) {
-    throw new Error("JWT_SECRET_KEY is not defined in the environment variable.");
+    throw new Error('JWT_SECRET_KEY is not defined in the environment variable.')
   }
 
-  const expiresIn = process.env.JWT_LIFETIME ? parseInt(process.env.JWT_LIFETIME) : 3600; // Default to 1 hour (3600 seconds)
+  const expiresIn = process.env.JWT_LIFETIME ? parseInt(process.env.JWT_LIFETIME) : 3600 // Default to 1 hour (3600 seconds)
   const options: SignOptions = {
-    expiresIn
-  };
+    expiresIn,
+  }
 
-  return jwt.sign(
-    { userId: this._id, firstName: this.firstName, lastName: this.lastName },
-    secretKey,
-    options
-  );
+  return jwt.sign({ userId: this._id, firstName: this.firstName, lastName: this.lastName }, secretKey, options)
 }
 
 // compare password method
 UserSchema.methods.comparePassword = async function (userPassword: string): Promise<boolean> {
-  console.log("Comparing:", userPassword, "with hash:", this.password);
-  return await bcrypt.compare(userPassword, this.password);
+  console.log('Comparing:', userPassword, 'with hash:', this.password)
+  return await bcrypt.compare(userPassword, this.password)
 }
 
 // define and export the User model
-const User = mongoose.model<IUser>('User', UserSchema);
+const User = mongoose.model<IUser>('User', UserSchema)
 
-export default User;
+export default User
