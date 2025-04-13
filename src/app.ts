@@ -6,6 +6,7 @@ import router from './routes/mainRouter'
 import plansRouter from './routes/plans'
 import swaggerUI from 'swagger-ui-express'
 import YAML from 'yamljs'
+import userRouter from "./routes/user";
 
 const app = express()
 
@@ -19,6 +20,7 @@ app.use(favicon(__dirname + '/public/favicon.ico'))
 
 // routes
 app.use('/api/v1', router)
+app.use('/api/v1/user', userRouter);
 app.use('/api/v1/plans', plansRouter)
 
 const swaggerDocument = YAML.load('./swagger.yaml')
