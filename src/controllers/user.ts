@@ -14,9 +14,6 @@ interface RegisterRequestBody {
   password: string
 }
 
-// Request<{}, {}, RegisterRequestBody>: {} represents route parameters. In this case,don't have nay router parameters like :id in /user/:id, so just empty object {}
-// second {} represents query parameters, don't have any query parameters in this case, so it's empty object {} again.
-// last part RegisterRequestBody expects a body that matches the RegisterRequestBody interface.
 const register = async (req: Request<object, object, RegisterRequestBody>, res: Response): Promise<void> => {
   const { firstName, lastName, email, password } = req.body
   try {
