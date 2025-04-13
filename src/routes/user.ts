@@ -1,10 +1,10 @@
-import express from "express";
-const router = express.Router();
-import { register, login, requestPasswordReset, resetPassword  } from "../controllers/user";
+import express from 'express'
+const router = express.Router()
+import { register, login, requestPasswordReset, resetPassword } from '../controllers/user'
 
-router.post('/register', register);
-router.post('/login', login);
-router.post('/request-reset-password', requestPasswordReset);
-router.post('/reset-password', resetPassword);
+router.post('/register', register)
+router.post('/login', login)
+router.post('/request-reset-password', requestPasswordReset)
+router.post('/reset-password', resetPassword)
 
-export default router;
+export default router
