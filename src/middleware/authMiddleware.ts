@@ -9,44 +9,43 @@ declare global {
     interface Request {
       user?: {
         userId: string;
-        name: string;
+        name: string; 
       }
     }
   }
 }
 
 interface MyJwtPayload {
-  userId: string;
-  firstName: string;
-  lastName: string;
+  userId: string
+  firstName: string
+  lastName: string
 }
 
-
 const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const authHeader = req.headers.authorization;
-  console.log("authHeader ", authHeader);
+  const authHeader = req.headers.authorization
+  console.log('authHeader ', authHeader)
 
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    throw new UnauthenticatedError("Authentication invalid");
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    throw new UnauthenticatedError('Authentication invalid')
   }
 
-  const token = authHeader.split(" ")[1];
+  const token = authHeader.split(' ')[1]
 
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET as string) as MyJwtPayload;
-    console.log("JWT Payload:", payload);
+    const payload = jwt.verify(token, process.env.JWT_SECRET as string) as MyJwtPayload
+    console.log('JWT Payload:', payload)
 
     req.user = {
       userId: payload.userId,
       name: `${payload.firstName} ${payload.lastName}`,
-    };
+    }
 
-    console.log(`Middleware check user`, req.user);
-    next();
+    console.log(`Middleware check user`, req.user)
+    next()
   } catch (error) {
-    console.error(error);
-    throw new UnauthenticatedError("Authentication invalid");
+    console.error(error)
+    throw new UnauthenticatedError('Authentication invalid')
   }
 }
 
-export default authMiddleware;
+export default authMiddleware

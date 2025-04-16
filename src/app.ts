@@ -8,8 +8,8 @@ import accountRouter from './routes/account'
 import swaggerUI from 'swagger-ui-express'
 import YAML from 'yamljs'
 import authMiddleware from './middleware/authMiddleware'
-import notFoundMiddleware from './middleware/notFoundMiddleware';
-import errorHandlerMiddleware from './middleware/errorHandlerMiddleware';
+import notFoundMiddleware from './middleware/notFoundMiddleware'
+import errorHandlerMiddleware from './middleware/errorHandlerMiddleware'
 
 const app = express()
 
@@ -28,12 +28,11 @@ app.use('/api/v1/plans', plansRouter)
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/account/plans', authMiddleware, accountRouter)
 
-
 const swaggerDocument = YAML.load('./swagger.yaml')
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 
 // error middleware
-app.use(notFoundMiddleware);
-app.use(errorHandlerMiddleware);
+app.use(notFoundMiddleware)
+app.use(errorHandlerMiddleware)
 
 export default app
