@@ -1,13 +1,8 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 import CustomAPIError from '../errors/custom_error'
 import { StatusCodes } from 'http-status-codes'
 
-const errorHandlerMiddleware = (
-  err: Error,
-  req: Request,
-  res: Response,
-  _next: NextFunction
-): void => {
+const errorHandlerMiddleware = (err: Error, req: Request, res: Response): void => {
   if (err instanceof CustomAPIError) {
     res.status(err.statusCode).json({ msg: err.message })
     return

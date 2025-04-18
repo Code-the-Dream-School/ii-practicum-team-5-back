@@ -1,27 +1,21 @@
 import { Request, Response, NextFunction } from 'express'
-import dotenv from 'dotenv'
-dotenv.config()
 import jwt from 'jsonwebtoken'
 import UnauthenticatedError from '../errors/unauthentication_error'
 
-declare global {
-  namespace Express {
-    interface Request {
-      user?: {
-        userId: string;
-        name: string; 
-      }
-    }
-  }
-}
-
-interface MyJwtPayload {
+interface MyJwtPayload extends jwt.JwtPayload {
   userId: string
   firstName: string
   lastName: string
 }
 
-const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+interface AuthenticatedRequest extends Request {
+  user?: {
+    userId: string
+    name: string
+  }
+}
+
+const authMiddleware = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization
   console.log('authHeader ', authHeader)
 
@@ -35,7 +29,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
     const payload = jwt.verify(token, process.env.JWT_SECRET as string) as MyJwtPayload
     console.log('JWT Payload:', payload)
 
-    req.user = {
+    res.locals.user = {
       userId: payload.userId,
       name: `${payload.firstName} ${payload.lastName}`,
     }
