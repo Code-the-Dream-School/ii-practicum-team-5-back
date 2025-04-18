@@ -8,6 +8,8 @@ import sendEmail from '../utils/email'
 import User from '../models/Users'
 
 interface RegisterRequestBody {
+  firstName: string
+  lastName: string
   name: string
   email: string
   password: string

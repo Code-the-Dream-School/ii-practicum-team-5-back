@@ -49,7 +49,6 @@ API full documentation is available via Swagger. After starting the server, go t
 
 The OpenAPI definition is located in `swagger.yaml`. The endpoints that are not yet implemented are marked as Draft.
 
-
 ## Running the back-end server in Visual Studio Code
 
 Note: In the below example, the group's front-end repository was named `bb-practicum-team1-front` and the back-end repository was named `bb-practicum-team-1-back`. Your repository will have a different name, but the rest should look the same.
