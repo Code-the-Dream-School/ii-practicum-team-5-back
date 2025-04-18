@@ -1,9 +1,29 @@
-import mongoose from 'mongoose'
+import mongoose, { Schema, Document, Types } from 'mongoose'
+import './Categories'
+import './Users'
 
-const PlanSchema = new mongoose.Schema(
+export interface IPlan extends Document {
+  userId: Types.ObjectId
+  title: string
+  description?: string
+  images: string[]
+  type?: 'Full day' | 'Half day' | 'Night'
+  stopCount: number
+  rate: number
+  reviewCount: number
+  startLocation: [number, number]
+  finishLocation: [number, number]
+  distance: number
+  duration: number
+  categoryId: Types.ObjectId
+  createdAt?: Date
+  updatedAt?: Date
+}
+
+const PlanSchema: Schema<IPlan> = new Schema(
   {
     userId: {
-      type: mongoose.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'User',
       required: [true, 'Provide user'],
     },
@@ -15,11 +35,13 @@ const PlanSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      maxLength: 255,
+      maxLength: [255, 'Description max length is 255'],
+      required: [true, 'Provide description'],
     },
     images: {
       type: [String],
       default: [],
+      required: [true, 'Provide at least one image url'],
     },
     type: {
       type: String,
@@ -39,24 +61,20 @@ const PlanSchema = new mongoose.Schema(
     },
     startLocation: {
       type: [Number, Number],
-      required: [true, 'Provide start location'],
     },
     finishLocation: {
       type: [Number, Number],
-      required: [true, 'Provide finish location'],
     },
     distance: {
       type: Number,
       default: 0,
-      required: [true, 'Provide distance'],
     },
     duration: {
       type: Number,
       default: 0,
-      required: [true, 'Provide duration'],
     },
     categoryId: {
-      type: mongoose.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Category',
       required: [true, 'Provide category'],
     },
@@ -66,4 +84,4 @@ const PlanSchema = new mongoose.Schema(
   }
 )
 
-module.exports = mongoose.model('Plan', PlanSchema)
+export default mongoose.model<IPlan>('Plan', PlanSchema)

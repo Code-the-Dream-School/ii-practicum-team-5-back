@@ -349,9 +349,14 @@ paths:
                 "title": "San Francisco Day Tour",
                 "description": "A one-day tour exploring San Francisco's iconic sites.",
                 "images": ["https://dummyimage.com/390x265/2196F3/fff.png"],
-                "type": "Full day",
-                "duration": "8 hours",
-                "categoryId": "city-exploration"
+                "categoryId": "city-exploration",
+                "stops": [
+                  {
+                    "name": "Ferry Building Marketplace",
+                    "imageURL": "https://dummyimage.com/390x265/2196F3/fff.png",
+                    "address": "1 Ferry Building, San Francisco, CA 94111"
+                  }
+                ]
               }
         required: true
       responses:
@@ -372,11 +377,25 @@ paths:
                   "startLocation": [0, 0],
                   "finishLocation": [0, 0],
                   "distance": 0,
-                  "duration": "8 hours",
+                  "duration": "",
                   "userId": "jane-doe",
                   "categoryId": "city-exploration",
                   "createdAt": "2025-04-04T16:50:54Z",
-                  "updatedAt": "2025-04-04T16:50:54Z"
+                  "updatedAt": "2025-04-04T16:50:54Z",
+                  "stops": [
+                    {
+                      "stopId": "stop-001",
+                      "planId": "san-francisco-day-tour",
+                      "name": "Ferry Building Marketplace",
+                      "imageURL": "https://dummyimage.com/390x265/2196F3/fff.png",
+                      "address": "1 Ferry Building, San Francisco, CA 94111",
+                      "description": "",
+                      "location": [0, 0],
+                      "sequence": 1,
+                      "createdAt": "2025-04-04T16:50:54Z",
+                      "updatedAt": "2025-04-04T16:50:54Z"
+                    }
+                  ]
                 }
           headers: {}
       deprecated: false
@@ -422,16 +441,16 @@ paths:
                   "updatedAt": "2025-04-04T16:50:54Z",
                   "stops": [
                     {
-                        "stopId": "stop-001",
-                        "planId": "san-francisco-day-tour",
-                        "name": "Ferry Building Marketplace",
-                        "imageURL": "https://dummyimage.com/390x265/2196F3/fff.png",
-                        "address": "1 Ferry Building, San Francisco, CA 94111",
-                        "description": "A historic building offering a variety of food vendors, shops, and a farmers market.",
-                        "location": [37.7955, -122.3937],
-                        "sequence": 1,
-                        "createdAt": "2025-04-04T16:50:54Z",
-                        "updatedAt": "2025-04-04T16:50:54Z"
+                      "stopId": "stop-001",
+                      "planId": "san-francisco-day-tour",
+                      "name": "Ferry Building Marketplace",
+                      "imageURL": "https://dummyimage.com/390x265/2196F3/fff.png",
+                      "address": "1 Ferry Building, San Francisco, CA 94111",
+                      "description": "A historic building offering a variety of food vendors, shops, and a farmers market.",
+                      "location": [37.7955, -122.3937],
+                      "sequence": 1,
+                      "createdAt": "2025-04-04T16:50:54Z",
+                      "updatedAt": "2025-04-04T16:50:54Z"
                     }
                   ]
                 }
@@ -456,9 +475,14 @@ paths:
                 "title": "San Francisco Day Tour",
                 "description": "A one-day tour exploring San Francisco's iconic sites.",
                 "images": ["https://dummyimage.com/390x265/2196F3/fff.png"],
-                "type": "Full day",
-                "duration": "8 hours",
-                "categoryId": "city-exploration"
+                "categoryId": "city-exploration",
+                "stops": [
+                  {
+                    "name": "Ferry Building Marketplace",
+                    "imageURL": "https://dummyimage.com/390x265/2196F3/fff.png",
+                    "address": "1 Ferry Building, San Francisco, CA 94111"
+                  }
+                ]
               }
         required: true
       responses:
@@ -473,47 +497,31 @@ paths:
                   "description": "A one-day tour exploring San Francisco's iconic sites, parks, museums, and dining establishments.",
                   "images": ["https://dummyimage.com/390x265/2196F3/fff.png"],
                   "type": "Full day",
-                  "stopCount": 1,
-                  "rating": 4.8,
-                  "reviewCount": 120,
-                  "startLocation": [37.7955, -122.3937],
-                  "finishLocation": [37.7879, -122.4074],
-                  "distance": 5,
-                  "duration": "8 hours",
+                  "stopCount": 0,
+                  "rating": 0,
+                  "reviewCount": 0,
+                  "startLocation": [0, 0],
+                  "finishLocation": [0, 0],
+                  "distance": 0,
+                  "duration": "",
                   "userId": "jane-doe",
                   "categoryId": "city-exploration",
                   "createdAt": "2025-04-04T16:50:54Z",
-                  "updatedAt": "2025-04-04T16:50:54Z"
-                }
-          headers: {}
-      deprecated: false
-    patch:
-      tags:
-        - Account
-      summary: (Draft) Set plan status to published or pending
-      security:
-        - bearerAuth: []
-      operationId: AccountUpdatePlansStatus
-      parameters: []
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AccountPlanStatusRequestBody'
-            example: |
-              {
-                "status": true
-              }
-        required: true
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              example: |
-                {
-                  "status": true
+                  "updatedAt": "2025-04-04T16:50:54Z",
+                  "stops": [
+                    {
+                      "stopId": "stop-001",
+                      "planId": "san-francisco-day-tour",
+                      "name": "Ferry Building Marketplace",
+                      "imageURL": "https://dummyimage.com/390x265/2196F3/fff.png",
+                      "address": "1 Ferry Building, San Francisco, CA 94111",
+                      "description": "",
+                      "location": [0, 0],
+                      "sequence": 1,
+                      "createdAt": "2025-04-04T16:50:54Z",
+                      "updatedAt": "2025-04-04T16:50:54Z"
+                    }
+                  ]
                 }
           headers: {}
       deprecated: false
@@ -524,107 +532,6 @@ paths:
       security:
         - bearerAuth: []
       operationId: AccountDeletePlan
-      parameters: []
-      responses:
-        '204':
-          description: 'No Content'
-          headers: {}
-      deprecated: false
-  /account/plans/{planId}/stops/{stopId}:
-    parameters:
-      - in: path
-        name: planId
-        schema:
-          type: string
-          example: san-francisco-day-tour
-        required: true
-        description: The plan ID
-      - in: path
-        name: stopId
-        schema:
-          type: string
-          example: stop-002
-        required: true
-        description: The stop ID
-    get:
-      tags:
-        - Account
-      summary: (Draft) Get a Stop details
-      security:
-        - bearerAuth: []
-      operationId: AccountGetStop
-      parameters: []
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              example: |
-                {
-                  "stopId": "stop-001",
-                  "planId": "san-francisco-day-tour",
-                  "name": "Ferry Building Marketplace",
-                  "imageURL": "https://dummyimage.com/390x265/2196F3/fff.png",
-                  "address": "1 Ferry Building, San Francisco, CA 94111",
-                  "description": "A historic building offering a variety of food vendors, shops, and a farmers market.",
-                  "location": [37.7955, -122.3937],
-                  "sequence": 1,
-                  "createdAt": "2025-04-04T16:50:54Z",
-                  "updatedAt": "2025-04-04T16:50:54Z"
-                }
-          headers: {}
-      deprecated: false
-    put:
-      tags:
-        - Account
-      summary: (Draft) Modify the stop details
-      security:
-        - bearerAuth: []
-      operationId: AccountUpdateStop
-      parameters: []
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AccountStopRequestBody'
-            example: |
-              {
-                "name": "Ferry Building Marketplace",
-                "imageURL": "https://dummyimage.com/390x265/2196F3/fff.png",
-                "address": "1 Ferry Building, San Francisco, CA 94111",
-                "description": "A historic building offering a variety of food vendors, shops, and a farmers market.",
-                "location": [37.7955, -122.3937],
-                "sequence": 1
-              }
-        required: true
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              example: |
-                {
-                  "stopId": "stop-001",
-                  "planId": "san-francisco-day-tour",
-                  "name": "Ferry Building Marketplace",
-                  "imageURL": "https://dummyimage.com/390x265/2196F3/fff.png",
-                  "address": "1 Ferry Building, San Francisco, CA 94111",
-                  "description": "A historic building offering a variety of food vendors, shops, and a farmers market.",
-                  "location": [37.7955, -122.3937],
-                  "sequence": 1,
-                  "createdAt": "2025-04-04T16:50:54Z",
-                  "updatedAt": "2025-04-04T16:50:54Z"
-                }
-          headers: {}
-      deprecated: false
-    delete:
-      tags:
-        - Account
-      summary: (Draft) Delete a Stop
-      security:
-        - bearerAuth: []
-      operationId: AccountDeleteStop
       parameters: []
       responses:
         '204':
@@ -669,8 +576,6 @@ components:
         - title
         - description
         - images
-        - type
-        - duration
         - categoryId
       type: object
       properties:
@@ -688,36 +593,30 @@ components:
           type: string
         categoryId:
           type: string
-    AccountPlanStatusRequestBody:
-      title: Plan's Status Change Object
-      required:
-        - status
-      type: object
-      properties:
-        status:
-          type: boolean
-    AccountStopRequestBody:
-      title: Stop's Object
-      required:
-        - name
-        - imageURL
-        - address
-        - location
-        - sequence
-      type: object
-      properties:
-        name:
-          type: string
-        imageURL:
-          type: string
-        description:
-          type: string
-        location:
+        stops:
           type: array
           items:
-            type: number
-        sequence:
-          type: number
+            type: object
+            title: Stop's Object
+            required:
+              - name
+              - imageURL
+              - address
+            properties:
+              name:
+                type: string
+              imageURL:
+                type: string
+              address:
+                type: string
+              description:
+                type: string
+              location:
+                type: array
+                items:
+                  type: number
+              sequence:
+                type: number
   parameters:
     CategoryIdParam:
       name: categoryId

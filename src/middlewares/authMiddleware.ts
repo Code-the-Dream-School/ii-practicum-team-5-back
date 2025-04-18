@@ -4,8 +4,7 @@ import UnauthenticatedError from '../errors/unauthentication_error'
 
 interface MyJwtPayload extends jwt.JwtPayload {
   userId: string
-  firstName: string
-  lastName: string
+  name: string
 }
 
 interface AuthenticatedRequest extends Request {
@@ -31,7 +30,7 @@ const authMiddleware = async (req: AuthenticatedRequest, res: Response, next: Ne
 
     res.locals.user = {
       userId: payload.userId,
-      name: `${payload.firstName} ${payload.lastName}`,
+      name: payload.name,
     }
 
     console.log(`Middleware check user`, req.user)

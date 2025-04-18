@@ -1,14 +1,27 @@
-import mongoose from 'mongoose'
+import mongoose, { Schema, Document, Types } from 'mongoose'
 
-const StopSchema = new mongoose.Schema(
+export interface IStop extends Document {
+  userId: Types.ObjectId
+  planId: Types.ObjectId
+  name: string
+  description?: string
+  imageURL: string
+  address: string
+  location: [number, number]
+  sequence: number
+  createdAt?: Date
+  updatedAt?: Date
+}
+
+const StopSchema: Schema<IStop> = new Schema(
   {
     userId: {
-      type: mongoose.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'User',
       required: [true, 'Provide user'],
     },
     planId: {
-      type: mongoose.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Plan',
       required: [true, 'Provide plan'],
     },
@@ -25,6 +38,7 @@ const StopSchema = new mongoose.Schema(
     imageURL: {
       type: String,
       default: '',
+      required: [true, 'Provide image URL'],
     },
     address: {
       type: String,
@@ -33,12 +47,10 @@ const StopSchema = new mongoose.Schema(
     },
     location: {
       type: [Number, Number],
-      required: [true, 'Provide location'],
     },
     sequence: {
       type: Number,
       default: 0,
-      required: [true, 'Provide sequence'],
     },
   },
   {
@@ -46,4 +58,4 @@ const StopSchema = new mongoose.Schema(
   }
 )
 
-module.exports = mongoose.model('Stop', StopSchema)
+export default mongoose.model<IStop>('Stop', StopSchema)

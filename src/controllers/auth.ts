@@ -10,12 +10,13 @@ import User from '../models/Users'
 interface RegisterRequestBody {
   firstName: string
   lastName: string
+  name: string
   email: string
   password: string
 }
 
 const register = async (req: Request<object, object, RegisterRequestBody>, res: Response): Promise<void> => {
-  const { firstName, lastName, email, password } = req.body
+  const { name, email, password } = req.body
   try {
     const existingUser = await User.findOne({ email })
     if (existingUser) {
@@ -23,15 +24,19 @@ const register = async (req: Request<object, object, RegisterRequestBody>, res: 
       return
     }
     const user = new User({
-      firstName,
-      lastName,
+      name,
       email,
       password,
     })
     await user.save()
+
+    const token = user.createJWT()
+
     res.status(StatusCodes.CREATED).json({
-      user: { id: user._id, name: `${user.firstName} ${user.lastName}` },
-      msg: 'User registered successfully',
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      token,
     })
   } catch (err) {
     console.error(err)
@@ -65,7 +70,9 @@ const login = async (req: Request, res: Response, next: NextFunction): Promise<v
       sameSite: 'strict',
     })
     res.status(StatusCodes.OK).json({
-      user: { id: user._id, name: `${user.firstName} ${user.lastName}` },
+      _id: user._id,
+      name: user.name,
+      email: user.email,
       token,
     })
   } catch (error) {
@@ -122,7 +129,7 @@ const requestPasswordReset = async (req: Request, res: Response) => {
 }
 
 const resetPassword = async (req: Request, res: Response) => {
-  const { resetToken, newPassword } = req.body.resetToken ? req.body : req.query
+  const { resetToken, newPassword } = req.body
   if (!resetToken || !newPassword) {
     throw new BadRequestError('Please provide a valid token and new password.')
   }
