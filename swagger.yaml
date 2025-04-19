@@ -25,12 +25,13 @@ paths:
             application/json:
               example: |
                 {
+                  "search": "San Francisco",
                   "categoryId": "city-exploration",
                   "page": 1,
                   "size": 10,
                   "items": [
                     {
-                      "planId": "san-francisco-day-tour",
+                      "_id": "san-francisco-day-tour",
                       "title": "San Francisco Day Tour",
                       "description": "A one-day tour exploring San Francisco's iconic sites, parks, museums, and dining establishments.",
                       "images": [
@@ -45,8 +46,14 @@ paths:
                       "finishLocation": [37.7879, -122.4074],
                       "distance": 5,
                       "duration": "8 hours",
-                      "userId": "jane-doe",
-                      "categoryId": "city-exploration",
+                      "userId": {
+                        "_id": "67fdfdfcd9c143f362fb9701",
+                        "name": "Reza"
+                      },
+                      "categoryId":  {
+                        "_id": "67fdfe49d9c143f362fb9702",
+                        "name": "My first cat"
+                      },
                       "createdAt": "2025-04-04T16:50:54Z",
                       "updatedAt": "2025-04-04T16:50:54Z"
                     }
@@ -76,7 +83,7 @@ paths:
             application/json:
               example: |
                 {
-                  "planId": "san-francisco-day-tour",
+                  "_id": "san-francisco-day-tour",
                   "title": "San Francisco Day Tour",
                   "description": "A one-day tour exploring San Francisco's iconic sites, parks, museums, and dining establishments.",
                   "images": ["https://dummyimage.com/390x265/2196F3/fff.png"],
@@ -88,13 +95,19 @@ paths:
                   "finishLocation": [37.7879, -122.4074],
                   "distance": 5,
                   "duration": "8 hours",
-                  "userId": "jane-doe",
-                  "categoryId": "city-exploration",
+                  "userId": {
+                    "_id": "67fdfdfcd9c143f362fb9701",
+                    "name": "Reza"
+                  },
+                  "categoryId":  {
+                    "_id": "67fdfe49d9c143f362fb9702",
+                    "name": "My first cat"
+                  },
                   "createdAt": "2025-04-04T16:50:54Z",
                   "updatedAt": "2025-04-04T16:50:54Z",
                   "stops": [
                     {
-                        "stopId": "stop-001",
+                        "_id": "stop-001",
                         "planId": "san-francisco-day-tour",
                         "name": "Ferry Building Marketplace",
                         "imageURL": "https://dummyimage.com/390x265/2196F3/fff.png",
@@ -131,18 +144,15 @@ paths:
             application/json:
               example: |
                 {
-                  "userId": "alice-johnson",
+                  "_id": "alice-johnson",
                   "name": "Alice Johnson",
                   "email": "alice.johnson@example.com",
-                  "pictureURL": "https://api.dicebear.com/9.x/dylan/svg?seed=alice-johnson",
-                  "createdAt": "2025-04-04T17:00:54Z",
-                  "updatedAt": "2025-04-04T17:00:54Z",
                   "plans": {
                     "page": 1,
                     "size": 10,
                     "items": [
                       {
-                        "planId": "berkeley-highlights-tour",
+                        "_id": "berkeley-highlights-tour",
                         "title": "Berkeley Highlights Tour",
                         "description": "A day exploring the University of California, Berkeley campus and surrounding cultural spots.",
                         "images": ["https://dummyimage.com/390x265/673AB7/fff.png"],
@@ -154,8 +164,14 @@ paths:
                         "finishLocation": [37.8793, -122.2698],
                         "distance": 3,
                         "duration": "6 hours",
-                        "userId": "alice-johnson",
-                        "categoryId": "academic-and-cultural-tour",
+                        "userId": {
+                          "_id": "67fdfdfcd9c143f362fb9701",
+                          "name": "Reza"
+                        },
+                        "categoryId":  {
+                          "_id": "67fdfe49d9c143f362fb9702",
+                          "name": "My first cat"
+                        },
                         "createdAt": "2025-04-04T17:00:54Z",
                         "updatedAt": "2025-04-04T17:00:54Z"
                       }
@@ -186,18 +202,14 @@ paths:
             application/json:
               example: |
                 {
-                  "categoryId": "nature-and-history",
+                  "_id": "nature-and-history",
                   "name": "Nature and History",
-                  "description": "Explore Berkeley's parks, history, and natural beauty.",
-                  "imageURL": "https://dummyimage.com/1050x230/8BC34A/fff.png",
-                  "createdAt": "2025-04-04T17:00:54Z",
-                  "updatedAt": "2025-04-04T17:00:54Z",
                   "plans": {
                     "page": 1,
                     "size": 10,
                     "items": [
                       {
-                        "planId": "berkeley-nature-history-tour",
+                        "_id": "berkeley-nature-history-tour",
                         "title": "Berkeley Nature & History Tour",
                         "description": "A day exploring Berkeley's natural beauty, parks, and historical sites.",
                         "images": ["https://dummyimage.com/390x265/8BC34A/fff.png"],
@@ -209,8 +221,14 @@ paths:
                         "finishLocation": [37.8712, -122.3021],
                         "distance": 5.5,
                         "duration": "7 hours",
-                        "userId": "alice-johnson",
-                        "categoryId": "nature-and-history",
+                        "userId": {
+                          "_id": "67fdfdfcd9c143f362fb9701",
+                          "name": "Reza"
+                        },
+                        "categoryId":  {
+                          "_id": "67fdfe49d9c143f362fb9702",
+                          "name": "My first cat"
+                        },
                         "createdAt": "2025-04-04T17:00:54Z",
                         "updatedAt": "2025-04-04T17:00:54Z"
                       }
@@ -290,7 +308,7 @@ paths:
     get:
       tags:
         - Account
-      summary: (Draft) Retrieve all of a user's plans
+      summary: Retrieve all of a user's plans
       security:
         - bearerAuth: []
       operationId: AccountGetUserPlans
@@ -306,7 +324,7 @@ paths:
                   "size": 10,
                   "items": [
                     {
-                      "planId": "san-francisco-day-tour",
+                      "_id": "san-francisco-day-tour",
                       "title": "San Francisco Day Tour",
                       "description": "A one-day tour exploring San Francisco's iconic sites, parks, museums, and dining establishments.",
                       "images": [
@@ -321,8 +339,14 @@ paths:
                       "finishLocation": [37.7879, -122.4074],
                       "distance": 5,
                       "duration": "8 hours",
-                      "userId": "jane-doe",
-                      "categoryId": "city-exploration",
+                      "userId": {
+                        "_id": "67fdfdfcd9c143f362fb9701",
+                        "name": "Reza"
+                      },
+                      "categoryId":  {
+                        "_id": "67fdfe49d9c143f362fb9702",
+                        "name": "My first cat"
+                      },
                       "createdAt": "2025-04-04T16:50:54Z",
                       "updatedAt": "2025-04-04T16:50:54Z"
                     }
@@ -333,7 +357,7 @@ paths:
     post:
       tags:
         - Account
-      summary: (Draft) Create new Plan
+      summary: Create new Plan
       security:
         - bearerAuth: []
       operationId: CreatePlan
@@ -366,7 +390,7 @@ paths:
             application/json:
               example: |
                 {
-                  "planId": "san-francisco-day-tour",
+                  "_id": "san-francisco-day-tour",
                   "title": "San Francisco Day Tour",
                   "description": "A one-day tour exploring San Francisco's iconic sites, parks, museums, and dining establishments.",
                   "images": ["https://dummyimage.com/390x265/2196F3/fff.png"],
@@ -378,13 +402,19 @@ paths:
                   "finishLocation": [0, 0],
                   "distance": 0,
                   "duration": "",
-                  "userId": "jane-doe",
-                  "categoryId": "city-exploration",
+                  "userId": {
+                    "_id": "67fdfdfcd9c143f362fb9701",
+                    "name": "Reza"
+                  },
+                  "categoryId":  {
+                    "_id": "67fdfe49d9c143f362fb9702",
+                    "name": "My first cat"
+                  },
                   "createdAt": "2025-04-04T16:50:54Z",
                   "updatedAt": "2025-04-04T16:50:54Z",
                   "stops": [
                     {
-                      "stopId": "stop-001",
+                      "_id": "stop-001",
                       "planId": "san-francisco-day-tour",
                       "name": "Ferry Building Marketplace",
                       "imageURL": "https://dummyimage.com/390x265/2196F3/fff.png",
@@ -411,7 +441,7 @@ paths:
     get:
       tags:
         - Account
-      summary: (Draft) Retrieve a plan details along with the associated stops
+      summary: Retrieve a plan details along with the associated stops
       security:
         - bearerAuth: []
       operationId: AccountGetPlan
@@ -423,7 +453,7 @@ paths:
             application/json:
               example: |
                 {
-                  "planId": "san-francisco-day-tour",
+                  "_id": "plan-id-sdfdsfkjhweiuhfsdkjfh",
                   "title": "San Francisco Day Tour",
                   "description": "A one-day tour exploring San Francisco's iconic sites, parks, museums, and dining establishments.",
                   "images": ["https://dummyimage.com/390x265/2196F3/fff.png"],
@@ -435,13 +465,19 @@ paths:
                   "finishLocation": [37.7879, -122.4074],
                   "distance": 5,
                   "duration": "8 hours",
-                  "userId": "jane-doe",
-                  "categoryId": "city-exploration",
+                  "userId": {
+                    "_id": "67fdfdfcd9c143f362fb9701",
+                    "name": "Reza"
+                  },
+                  "categoryId":  {
+                    "_id": "67fdfe49d9c143f362fb9702",
+                    "name": "My first cat"
+                  },
                   "createdAt": "2025-04-04T16:50:54Z",
                   "updatedAt": "2025-04-04T16:50:54Z",
                   "stops": [
                     {
-                      "stopId": "stop-001",
+                      "_id": "stop-001",
                       "planId": "san-francisco-day-tour",
                       "name": "Ferry Building Marketplace",
                       "imageURL": "https://dummyimage.com/390x265/2196F3/fff.png",
@@ -459,7 +495,7 @@ paths:
     put:
       tags:
         - Account
-      summary: (Draft) Modify the plan details
+      summary: Modify the plan details
       security:
         - bearerAuth: []
       operationId: AccountUpdatePlan
@@ -492,7 +528,7 @@ paths:
             application/json:
               example: |
                 {
-                  "planId": "san-francisco-day-tour",
+                  "_id": "san-francisco-day-tour",
                   "title": "San Francisco Day Tour",
                   "description": "A one-day tour exploring San Francisco's iconic sites, parks, museums, and dining establishments.",
                   "images": ["https://dummyimage.com/390x265/2196F3/fff.png"],
@@ -504,13 +540,19 @@ paths:
                   "finishLocation": [0, 0],
                   "distance": 0,
                   "duration": "",
-                  "userId": "jane-doe",
-                  "categoryId": "city-exploration",
+                  "userId": {
+                    "_id": "67fdfdfcd9c143f362fb9701",
+                    "name": "Reza"
+                  },
+                  "categoryId":  {
+                    "_id": "67fdfe49d9c143f362fb9702",
+                    "name": "My first cat"
+                  },
                   "createdAt": "2025-04-04T16:50:54Z",
                   "updatedAt": "2025-04-04T16:50:54Z",
                   "stops": [
                     {
-                      "stopId": "stop-001",
+                      "_id": "stop-001",
                       "planId": "san-francisco-day-tour",
                       "name": "Ferry Building Marketplace",
                       "imageURL": "https://dummyimage.com/390x265/2196F3/fff.png",
@@ -528,7 +570,7 @@ paths:
     delete:
       tags:
         - Account
-      summary: (Draft) Delete a plan including all the associated stops
+      summary: Delete a plan including all the associated stops
       security:
         - bearerAuth: []
       operationId: AccountDeletePlan

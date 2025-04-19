@@ -90,6 +90,4 @@ UserSchema.methods.comparePassword = async function (userPassword: string): Prom
 }
 
 // define and export the User model
-const User = mongoose.model<IUser>('User', UserSchema)
-
-export default User
+export default mongoose.model<IUser>('User', UserSchema)

@@ -1,3 +1,4 @@
+import 'express-async-errors'
 import express from 'express'
 import cors from 'cors'
 import favicon from 'express-favicon'
@@ -9,6 +10,7 @@ import accountRouter from './routes/account'
 import swaggerUI from 'swagger-ui-express'
 import YAML from 'yamljs'
 import authMiddleware from './middlewares/authMiddleware'
+import errorHandlerMiddleware from './middlewares/errorHandlerMiddleware'
 
 const app = express()
 
@@ -29,7 +31,7 @@ app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/account/plans', authMiddleware, accountRouter)
 
 // TODO: Add not found middleware
-// TODO: Add error handling middleware
+app.use(errorHandlerMiddleware)
 
 const swaggerDocument = YAML.load('./swagger.yaml')
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
