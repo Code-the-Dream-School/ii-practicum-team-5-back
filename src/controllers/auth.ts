@@ -21,6 +21,7 @@ const register = async (req: Request<object, object, RegisterRequestBody>, res: 
     name,
     email,
     password,
+    imageURL: `https://api.dicebear.com/7.x/micah/png?seed=${email}&flip=true&w=96&q=75`,
   })
   await user.save()
 
@@ -30,7 +31,7 @@ const register = async (req: Request<object, object, RegisterRequestBody>, res: 
     _id: user._id,
     name: user.name,
     email: user.email,
-    imageURL: `https://api.dicebear.com/7.x/micah/png?seed=${user.email}&flip=true&w=96&q=75`,
+    imageURL: user.imageURL,
     token,
   })
 }
@@ -65,7 +66,7 @@ const login = async (req: Request, res: Response): Promise<void> => {
     _id: user._id,
     name: user.name,
     email: user.email,
-    imageURL: `https://api.dicebear.com/7.x/micah/png?seed=${user.email}&flip=true&w=96&q=75`,
+    imageURL: user.imageURL,
     token,
   })
 }
@@ -140,7 +141,7 @@ const resetPassword = async (req: Request, res: Response) => {
     _id: user._id,
     name: user.name,
     email: user.email,
-    imageURL: `https://api.dicebear.com/7.x/micah/png?seed=${user.email}&flip=true&w=96&q=75`,
+    imageURL: user.imageURL,
     token,
   })
 }

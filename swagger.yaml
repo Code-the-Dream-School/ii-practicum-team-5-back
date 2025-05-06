@@ -148,6 +148,7 @@ paths:
                 {
                   "_id": "alice-johnson",
                   "name": "Alice Johnson",
+                  "imageURL": "http://example.com/alice.jpg",
                   "email": "alice.johnson@example.com",
                   "plans": {
                     "page": 1,
@@ -206,6 +207,8 @@ paths:
                 {
                   "_id": "nature-and-history",
                   "name": "Nature and History",
+                  "description": "Discover the beauty, wonder, and serenity of the great outdoors through our Nature Exploration category.",
+                  "imageURL": "http://example.com/nature.jpg",
                   "plans": {
                     "page": 1,
                     "size": 10,
@@ -243,7 +246,7 @@ paths:
     post:
       tags:
         - Auth
-      summary: (Draft) Register User with email and password
+      summary: Register User with email and password
       operationId: RegisterUser
       parameters: []
       requestBody:
@@ -260,14 +263,16 @@ paths:
               }
         required: true
       responses:
-        '200':
-          description: ''
+        '201':
+          description: Successful response
           content:
             application/json:
               example: |
                 {
+                  "_id": "user-id-example-sdfdsfkjhweiuh",
                   "name": "Bob",
                   "email": "bob@example.com",
+                  "imageURL": "http://example.com/bob.jpg",
                   "token": "example-token-sdf98sdf879sdf9sd8fsd89f89wefw"
                 }
           headers: {}
@@ -277,7 +282,7 @@ paths:
     post:
       tags:
         - Auth
-      summary: (Draft) Login User with email and password
+      summary: Login User with email and password
       operationId: LoginUser
       parameters: []
       requestBody:
@@ -294,17 +299,77 @@ paths:
         required: true
       responses:
         '200':
-          description: ''
+          description: Successful response
           content:
             application/json:
               example: |
                 {
+                  "_id": "user-id-example-sdfdsfkjhweiuh",
                   "name": "Bob",
                   "email": "bob@example.com",
+                  "imageURL": "http://example.com/bob.jpg",
                   "token": "example-token-sdf98sdf879sdf9sd8fsd89f89wefw"
                 }
           headers: {}
       deprecated: false
+      security: []
+  /auth/request-reset-password:
+    post:
+      tags:
+        - Auth 
+      summary: User request to reset up password
+      operationId: RequestResetPassword
+      parameters: []
+      requestBody:
+        description: ''
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestResetPasswordObject'
+            example: |
+              {
+                "email": "bob@example.com"
+              }
+        required: true 
+      responses:
+        '204':
+          description: Successful response and no content
+      deprecated: false 
+      security: []
+  /auth/reset-password:
+    post:
+      tags:
+        - Auth 
+      summary: Reset auth's login password 
+      operationId: ResetPassword
+      parameters: [] 
+      requestBody: 
+        description: ''
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordObject'
+            example: |
+              {
+                "resetToken": "example-token-daff05f70ce0af67a32e31346300051cf7c415af",
+                "newPassword": "newPasswordExample"
+              }
+        required: true 
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: |
+                {
+                  "_id": "user-id-example-sdfdsfkjhweiuh",
+                  "name": "Bob",
+                  "email": "bob@example.com",
+                  "imageURL": "http://example.com/bob.jpg",
+                  "token": "example-token-sdf98sdf879sdf9sd8fsd89f89wefw"
+                }
+          headers: {}
+      deprecated: false 
       security: []
   /account/plans:
     get:
@@ -770,6 +835,27 @@ components:
           type: string
         password:
           type: string
+    RequestResetPasswordObject:
+      type: object 
+      properties:
+        email: 
+          type: string 
+          format: email 
+          example: bob@example.com
+      required:
+        - email 
+    ResetPasswordObject:
+      type: object 
+      properties:
+        resetToken:
+          type: string 
+          example: example-token-daff05f70ce0af67a32e31346300051cf7c415af
+        newPassword:
+          type: string 
+          example: newPasswordExample
+      required:
+        - resetToken 
+        - newPassword 
     AccountPlanRequestBody:
       title: Plan's Object
       required:
