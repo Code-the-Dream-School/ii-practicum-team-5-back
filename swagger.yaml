@@ -56,6 +56,7 @@ paths:
                         "_id": "67fdfe49d9c143f362fb9702",
                         "name": "My first cat"
                       },
+                      "isBookmarked": false,
                       "createdAt": "2025-04-04T16:50:54Z",
                       "updatedAt": "2025-04-04T16:50:54Z"
                     }
@@ -105,6 +106,7 @@ paths:
                     "_id": "67fdfe49d9c143f362fb9702",
                     "name": "My first cat"
                   },
+                  "isBookmarked": false,
                   "createdAt": "2025-04-04T16:50:54Z",
                   "updatedAt": "2025-04-04T16:50:54Z",
                   "stops": [
@@ -148,6 +150,7 @@ paths:
                 {
                   "_id": "alice-johnson",
                   "name": "Alice Johnson",
+                  "imageURL": "http://example.com/alice.jpg",
                   "email": "alice.johnson@example.com",
                   "plans": {
                     "page": 1,
@@ -174,12 +177,47 @@ paths:
                           "_id": "67fdfe49d9c143f362fb9702",
                           "name": "My first cat"
                         },
+                        "isBookmarked": false,
                         "createdAt": "2025-04-04T17:00:54Z",
                         "updatedAt": "2025-04-04T17:00:54Z"
                       }
                     ]
                   }
                 }
+          headers: {}
+      deprecated: false
+  /plans/category:
+    get:
+      tags:
+        - Plans
+      summary: Get list of all categories
+      parameters: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: |
+                [
+                  {
+                    "_id": "680819f66e7cdbc049ab3f57",
+                    "name": "City Exploration",
+                    "description": "Explore the city's landmarks, parks, museums, and dining spots.",
+                    "imageURL": "https://example.com/city-exploration.jpg"
+                  },
+                  {
+                    "_id": "68081b006e7cdbc049ab3f58",
+                    "name": "Urban Adventure",
+                    "description": "Discover the vibrant city life, parks, museums, and culinary delights.",
+                    "imageURL": "https://example.com/urban-adventure.jpg"
+                  },
+                  {
+                    "_id": "68081b546e7cdbc049ab3f59",
+                    "name": "Food and Drink Gems",
+                    "description": "Restaurants, Bars and Cafes",
+                    "imageURL": "https://example.com/food-and-drink-gems.jpg"
+                  }
+                ]
           headers: {}
       deprecated: false
   /plans/category/{categoryId}:
@@ -206,6 +244,8 @@ paths:
                 {
                   "_id": "nature-and-history",
                   "name": "Nature and History",
+                  "description": "Discover the beauty, wonder, and serenity of the great outdoors through our Nature Exploration category.",
+                  "imageURL": "http://example.com/nature.jpg",
                   "plans": {
                     "page": 1,
                     "size": 10,
@@ -231,6 +271,7 @@ paths:
                           "_id": "67fdfe49d9c143f362fb9702",
                           "name": "My first cat"
                         },
+                        "isBookmarked": false,
                         "createdAt": "2025-04-04T17:00:54Z",
                         "updatedAt": "2025-04-04T17:00:54Z"
                       }
@@ -243,7 +284,7 @@ paths:
     post:
       tags:
         - Auth
-      summary: (Draft) Register User with email and password
+      summary: Register User with email and password
       operationId: RegisterUser
       parameters: []
       requestBody:
@@ -260,14 +301,16 @@ paths:
               }
         required: true
       responses:
-        '200':
-          description: ''
+        '201':
+          description: Successful response
           content:
             application/json:
               example: |
                 {
+                  "_id": "user-id-example-sdfdsfkjhweiuh",
                   "name": "Bob",
                   "email": "bob@example.com",
+                  "imageURL": "http://example.com/bob.jpg",
                   "token": "example-token-sdf98sdf879sdf9sd8fsd89f89wefw"
                 }
           headers: {}
@@ -277,7 +320,7 @@ paths:
     post:
       tags:
         - Auth
-      summary: (Draft) Login User with email and password
+      summary: Login User with email and password
       operationId: LoginUser
       parameters: []
       requestBody:
@@ -294,17 +337,77 @@ paths:
         required: true
       responses:
         '200':
-          description: ''
+          description: Successful response
           content:
             application/json:
               example: |
                 {
+                  "_id": "user-id-example-sdfdsfkjhweiuh",
                   "name": "Bob",
                   "email": "bob@example.com",
+                  "imageURL": "http://example.com/bob.jpg",
                   "token": "example-token-sdf98sdf879sdf9sd8fsd89f89wefw"
                 }
           headers: {}
       deprecated: false
+      security: []
+  /auth/request-reset-password:
+    post:
+      tags:
+        - Auth 
+      summary: User request to reset up password
+      operationId: RequestResetPassword
+      parameters: []
+      requestBody:
+        description: ''
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestResetPasswordObject'
+            example: |
+              {
+                "email": "bob@example.com"
+              }
+        required: true 
+      responses:
+        '204':
+          description: Successful response and no content
+      deprecated: false 
+      security: []
+  /auth/reset-password:
+    post:
+      tags:
+        - Auth 
+      summary: Reset auth's login password 
+      operationId: ResetPassword
+      parameters: [] 
+      requestBody: 
+        description: ''
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordObject'
+            example: |
+              {
+                "resetToken": "example-token-daff05f70ce0af67a32e31346300051cf7c415af",
+                "newPassword": "newPasswordExample"
+              }
+        required: true 
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: |
+                {
+                  "_id": "user-id-example-sdfdsfkjhweiuh",
+                  "name": "Bob",
+                  "email": "bob@example.com",
+                  "imageURL": "http://example.com/bob.jpg",
+                  "token": "example-token-sdf98sdf879sdf9sd8fsd89f89wefw"
+                }
+          headers: {}
+      deprecated: false 
       security: []
   /account/plans:
     get:
@@ -770,6 +873,27 @@ components:
           type: string
         password:
           type: string
+    RequestResetPasswordObject:
+      type: object 
+      properties:
+        email: 
+          type: string 
+          format: email 
+          example: bob@example.com
+      required:
+        - email 
+    ResetPasswordObject:
+      type: object 
+      properties:
+        resetToken:
+          type: string 
+          example: example-token-daff05f70ce0af67a32e31346300051cf7c415af
+        newPassword:
+          type: string 
+          example: newPasswordExample
+      required:
+        - resetToken 
+        - newPassword 
     AccountPlanRequestBody:
       title: Plan's Object
       required:

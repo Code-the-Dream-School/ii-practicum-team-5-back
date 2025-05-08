@@ -6,6 +6,7 @@ export interface IUser extends Document {
   name: string
   email: string
   password: string
+  imageURL: string
   passwordResetToken?: string
   passwordResetExpires?: number
   createdAt?: Date
@@ -44,6 +45,10 @@ const UserSchema: Schema<IUser> = new mongoose.Schema(
         },
         message: 'Password must include at least one uppercase letter, one lowercase letter, and one number',
       },
+    },
+    imageURL: {
+      type: String,
+      default: '',
     },
     passwordResetToken: {
       type: String,

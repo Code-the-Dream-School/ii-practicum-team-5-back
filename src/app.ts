@@ -9,7 +9,7 @@ import plansRouter from './routes/plans'
 import accountRouter from './routes/account'
 import swaggerUI from 'swagger-ui-express'
 import YAML from 'yamljs'
-import authMiddleware from './middlewares/authMiddleware'
+import authMiddleware, { optionalAuthMiddleware } from './middlewares/authMiddleware'
 import errorHandlerMiddleware from './middlewares/errorHandlerMiddleware'
 
 const app = express()
@@ -26,7 +26,7 @@ app.use(favicon(__dirname + '/public/favicon.ico'))
 
 // routes
 app.use('/api/v1', router)
-app.use('/api/v1/plans', plansRouter)
+app.use('/api/v1/plans', optionalAuthMiddleware, plansRouter)
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/account', authMiddleware, accountRouter)
 
