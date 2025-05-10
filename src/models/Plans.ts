@@ -35,7 +35,6 @@ const PlanSchema: Schema<IPlan> = new Schema(
     },
     description: {
       type: String,
-      maxLength: [255, 'Description max length is 255'],
       required: [true, 'Provide description'],
     },
     images: {

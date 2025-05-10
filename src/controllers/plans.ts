@@ -9,7 +9,7 @@ import NotFoundError from '../errors/not_found'
 const PAGE_SIZE = 10
 
 const fetchAllPlans = async (req: Request, res: Response) => {
-  const { search, categoryId, page = 1, size = PAGE_SIZE } = req.query
+  const { search, categoryId, page = '1', size = PAGE_SIZE } = req.query
 
   const filters = {
     ...(search && {
@@ -21,6 +21,9 @@ const fetchAllPlans = async (req: Request, res: Response) => {
   const pageSize: number = parseInt(size as string)
   const pageNumber: number = (parseInt(page as string) - 1) * pageSize
 
+  const totalItems = await PlanSchema.countDocuments(filters)
+  const pagesCount = Math.ceil(totalItems / pageSize)
+
   const plans = await PlanSchema.find(filters)
     .populate('categoryId', 'name')
     .populate('userId', 'name')
@@ -29,15 +32,16 @@ const fetchAllPlans = async (req: Request, res: Response) => {
 
   res.status(StatusCodes.OK).json({
     ...{ search, categoryId },
-    page: 1,
-    size: 10,
+    page: parseInt(page as string),
+    size: pageSize,
+    pagesCount,
     items: plans,
   })
 }
 
 const fetchUserWithPlans = async (req: Request, res: Response) => {
   const { userId } = req.params
-  const { page = 1, size = PAGE_SIZE } = req.query
+  const { page = '1', size = PAGE_SIZE } = req.query
 
   const pageSize: number = parseInt(size as string)
   const pageNumber: number = (parseInt(page as string) - 1) * pageSize
@@ -57,11 +61,15 @@ const fetchUserWithPlans = async (req: Request, res: Response) => {
     .skip(pageNumber)
     .limit(pageSize)
 
+  const totalItems = await PlanSchema.countDocuments(filters)
+  const pagesCount = Math.ceil(totalItems / pageSize)
+
   res.status(StatusCodes.OK).json({
     ...user,
     plans: {
-      page: pageNumber,
+      page: parseInt(page as string),
       size: pageSize,
+      pagesCount,
       items: plans,
     },
   })
@@ -69,7 +77,7 @@ const fetchUserWithPlans = async (req: Request, res: Response) => {
 
 const fetchCategoryWithPlans = async (req: Request, res: Response) => {
   const { categoryId } = req.params
-  const { page = 1, size = PAGE_SIZE } = req.query
+  const { page = '1', size = PAGE_SIZE } = req.query
 
   const pageSize: number = parseInt(size as string)
   const pageNumber: number = (parseInt(page as string) - 1) * pageSize
@@ -88,11 +96,15 @@ const fetchCategoryWithPlans = async (req: Request, res: Response) => {
     .skip(pageNumber)
     .limit(pageSize)
 
+  const totalItems = await PlanSchema.countDocuments(filters)
+  const pagesCount = Math.ceil(totalItems / pageSize)
+
   res.status(StatusCodes.OK).json({
     ...category,
     plans: {
-      page: pageNumber,
+      page: parseInt(page as string),
       size: pageSize,
+      pagesCount,
       items: plans,
     },
   })

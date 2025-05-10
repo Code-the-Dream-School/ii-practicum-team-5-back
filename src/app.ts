@@ -11,6 +11,7 @@ import swaggerUI from 'swagger-ui-express'
 import YAML from 'yamljs'
 import authMiddleware from './middlewares/authMiddleware'
 import errorHandlerMiddleware from './middlewares/errorHandlerMiddleware'
+import notFoundMiddleware from './middlewares/notFoundMiddleware'
 
 const app = express()
 
@@ -30,7 +31,7 @@ app.use('/api/v1/plans', plansRouter)
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/account', authMiddleware, accountRouter)
 
-// TODO: Add not found middleware
+app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
 
 const swaggerDocument = YAML.load('./swagger.yaml')

@@ -2,10 +2,15 @@ import { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import BookmarkSchema from '../../models/Bookmarks'
 import PlanSchema from '../../models/Plans'
-import CustomAPIError from '../../errors/custom_error'
+import NotFoundError from '../../errors/not_found'
+import UnauthenticatedError from '../../errors/unauthentication_error'
+
+const PAGE_SIZE = 10
 
 const fetchAllBookmarkedPlans = async (req: Request, res: Response) => {
-  if (!req.user) throw new CustomAPIError('Not authorized to access.', StatusCodes.UNAUTHORIZED)
+  if (!req.user) throw new UnauthenticatedError('Not authorized to access.')
+
+  const { page = '1', size = PAGE_SIZE } = req.query
 
   const userId = req.user.userId
 
@@ -17,19 +22,28 @@ const fetchAllBookmarkedPlans = async (req: Request, res: Response) => {
     },
   }
 
-  // TODO: Add pagination support later
+  const pageSize: number = parseInt(size as string)
+  const pageNumber: number = (parseInt(page as string) - 1) * pageSize
 
-  const bookmarkedPlans = await PlanSchema.find(filters).populate('categoryId', 'name').populate('userId', 'name')
+  const totalItems = await PlanSchema.countDocuments(filters)
+  const pagesCount = Math.ceil(totalItems / pageSize)
+
+  const bookmarkedPlans = await PlanSchema.find(filters)
+    .populate('categoryId', 'name')
+    .populate('userId', 'name')
+    .skip(pageNumber)
+    .limit(pageSize)
 
   res.status(StatusCodes.OK).json({
-    page: 1,
-    size: 10,
+    page: parseInt(page as string),
+    size: pageSize,
+    pagesCount,
     items: bookmarkedPlans,
   })
 }
 
 const addBookmark = async (req: Request, res: Response) => {
-  if (!req.user) throw new CustomAPIError('Not authorized to access.', StatusCodes.UNAUTHORIZED)
+  if (!req.user) throw new UnauthenticatedError('Not authorized to access.')
 
   const userId = req.user.userId
   const { planId } = req.params
@@ -47,7 +61,7 @@ const addBookmark = async (req: Request, res: Response) => {
 }
 
 const removeBookmark = async (req: Request, res: Response) => {
-  if (!req.user) throw new CustomAPIError('Not authorized to access.', StatusCodes.UNAUTHORIZED)
+  if (!req.user) throw new UnauthenticatedError('Not authorized to access.')
 
   const userId = req.user.userId
   const { planId } = req.params
@@ -58,7 +72,7 @@ const removeBookmark = async (req: Request, res: Response) => {
   })
 
   if (!result) {
-    throw new CustomAPIError(`No bookmarked plan with id ${planId}`, StatusCodes.NOT_FOUND)
+    throw new NotFoundError(`No bookmarked plan with id ${planId}`)
   }
 
   res.status(StatusCodes.NO_CONTENT).end()
