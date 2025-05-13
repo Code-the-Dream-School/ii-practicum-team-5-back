@@ -31,10 +31,10 @@ app.use('/api/v1/plans', optionalAuthMiddleware, plansRouter)
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/account', authMiddleware, accountRouter)
 
-app.use(notFoundMiddleware)
-app.use(errorHandlerMiddleware)
-
 const swaggerDocument = YAML.load('./swagger.yaml')
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
+
+app.use(notFoundMiddleware)
+app.use(errorHandlerMiddleware)
 
 export default app
